@@ -204,12 +204,16 @@
 document.getElementById("printTemplate").addEventListener("click", function () {
     const { jsPDF } = window.jspdf;
 
+     // Ensure no elements are hidden if they don't exist
+     const noPrintElements = document.querySelectorAll(".no-print");
+    noPrintElements.forEach(element => element.style.display = "none");
+
     // Select the elements to process
     const template = document.querySelector(".template1");
     const modal = document.getElementById("modal");
     const modalContent = document.querySelector(".modalContent");
     template.style.display = "block";
-    
+
 
     // Function to temporarily detach the template
     function detachTemplate(template) {
