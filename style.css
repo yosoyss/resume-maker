@@ -16,6 +16,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .headerData{
@@ -88,4 +89,16 @@
 
 #educationData{
     flex-direction: column-reverse;
+}
+
+
+@media (max-width:768px){
+    .template1{
+        padding: 20px;
+    }
+
+    .header{
+        margin-bottom: 10px;
+    }
+
 }

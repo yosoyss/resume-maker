@@ -112,8 +112,12 @@ button:hover {
         width: 100%;
     }
 
-    .closeModal{
+    .closeModal, i{
         color: #000000;
+    }
+
+    .modalContent{
+        padding: 0 !important;
     }
     
 }
