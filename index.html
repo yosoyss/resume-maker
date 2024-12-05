@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+
+    <!-- style for template -->
+    <link rel="stylesheet" href="style.css">
+    <!-- style for input -->
+    <link rel="stylesheet" href="style1.css">
+
+    <!-- Include jsPDF from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Include html2canvas from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.2/html2canvas.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+
+
+    <script src="/resume maker/script.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Tabs for Different Sections -->
+        <div class="tabContainer">
+            <button class='tabButton active' onclick="tabs('basicTab')">Basic Info</button>
+            <button class='tabButton' onclick="tabs('summaryTab')">Summary</button>
+            <button class='tabButton' onclick="tabs('educationTab')">Education</button>
+            <button class='tabButton' onclick="tabs('experienceTab')">Experience</button>
+            <button class='tabButton' onclick="tabs('skillsTab')">Skills</button>
+            <button class='tabButton' onclick="tabs('projectsTab')">Projects</button>
+        </div>
+
+        <div class="formCont">
+
+            <div class="basicData tabContent active" id="basicTab">
+                <h2>Basic Info</h2>
+                <div class="data">
+                    <input type="text" id="inputName" placeholder="Enter Name" />
+                    <input type="text" id="inputPhone" placeholder="Phone Number" />
+                    <input type="email" id="inputEmail" placeholder="Email" />
+                    <input type="text" id="inputGithub" placeholder="github.com/id" />
+                    <button id="updateTemplate">Update Template</button>
+                </div>
+            </div>
+
+            <div class="summaryData tabContent" id="summaryTab">
+                <h2>Summary</h2>
+                <div class="data">
+                    <textarea id="inputSummary" placeholder="Write a short summary or objective"></textarea>
+                    <button id="summary">Add Summary</button>
+                </div>
+            </div>
+
+            <!-- Education Info -->
+            <div class="basicEducation tabContent" id="educationTab">
+                <h2>Education Info</h2>
+                <div class="educationDataInput">
+                    <input type="text" id="inputCourseName" placeholder="Course Name" />
+                    <input type="text" id="inputCoursePercentage" placeholder="Percentage" />
+                    <input type="text" id="inputCourseYear" placeholder="may 2023-june 2024" />
+                    <input type="text" id="inputCollegeName" placeholder="College Name" />
+                    <button id="addEducation">Add Education</button>
+                </div>
+            </div>
+
+            <!-- Experience Info -->
+            <div class="basicExperience tabContent" id="experienceTab">
+                <h2>Experience Info</h2>
+                <div class="experienceDataInput">
+                    <input type="text" id="inputJobTitle" placeholder="Job Title" />
+                    <input type="text" id="inputCompanyName" placeholder="Company Name" />
+                    <input type="text" id="inputExperienceYear" placeholder="Year" />
+                    <button id="addExperience">Add Experience</button>
+                </div>
+            </div>
+
+            <!-- Skills Info -->
+            <div class="basicSkills tabContent" id="skillsTab">
+                <h2>Skills Info</h2>
+                <div class="skillsDataInput">
+                    <input type="text" id="inputSkill" placeholder="Skill Name" />
+                    <button id="addSkill">Add Skill</button>
+                </div>
+            </div>
+
+            <!-- projects -->
+            <div class="basicProjects tabContent" id="projectsTab">
+                <h2>Projects</h2>
+                <div class="projectDataInput">
+                    <input type="text" id="inputProjectName" placeholder="Project Name" />
+                    <input type="url" id="inputProjectLink" placeholder="Project Link (optional)" />
+                    <textarea id="inputProjectDescription" placeholder="Description"></textarea>
+                    <button id="addProject">Add Project</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="buttons">
+            <button id="previewTemplate" onclick="openModal()">Preview</button>
+            <button id="printTemplate">Save as PDF</button>
+            <!-- <button id="saveAsWord">Save as Word</button> -->
+        </div>
+        <!-- ************Template 1************ -->
+        <div id="modal" style="display:none">
+            <i class="closeModal fa-solid fa-xmark" onclick="closeModal()"></i>
+            <div class="modalContent">
+                <div class="template1">
+
+                    <!-- template header -->
+                    <div class="header">
+                        <h1 id="name">[Your Name]</h1>
+                        <div class="headerData">
+                            <div class="phoneNum" id="phone">[Phone Number]</div> |
+                            <div class="email" id="email">[Email]</div> |
+                            <div class="github" id="github">[GitHub Link]</div>
+                        </div>
+                    </div>
+
+                    <div class="summary">
+                        <h3 class="subheader">Summary</h3>
+                        <div id="summarytxt"></div>
+                    </div>
+
+                    <!-- education -->
+                    <div class="education">
+                        <h3 class="subheader">Education</h3>
+                        <div id="educationData">
+                            <div class="courseData">
+                                <div id="courseName">
+                                    <div id="percentage"></div>
+                                </div>
+                                <!-- <div id="courseYear">jul 2023-jul 2024</div> -->
+                            </div>
+
+                            <!-- course colg -->
+                            <div class="courseColg">
+                                <!-- <p id="address"></p> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- experience -->
+                    <div class="experience">
+                        <h3 class="subheader">Experience</h3>
+                        <div id="experienceData">
+                            <div class="data">
+                                <!-- <p id="courseName">Msc. IT -->
+                                <!-- <div id="percentage">72%</div> -->
+                                </p>
+                                <!-- <p id="courseYear">jul 2023-jul 2024</p> -->
+                            </div>
+                            <div class="courseColg">
+                                <!-- <p id="address">Ripudamn Colg Nabha</p> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ******Skills**** -->
+                    <div class="skills">
+                        <h3 class="subheader">Skills</h3>
+                        <div class="skillData">
+                            <ul>
+                                <!-- <li>Frontend : html, css</li>
+                        <li>Backend : python</li> -->
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- ****Projects*** -->
+                    <!-- Projects -->
+                    <div class="projects">
+                        <h3 class="subheader">Projects</h3>
+                        <div id="projectData">
+                            <!-- Dynamically added projects will appear here -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- template 2 -->
+        
+    </div>
+
+
+
+    <!-- Include jsPDF from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script src="./html2canvas.js"></script>
+
+    <script>
+        document.getElementById("printTemplate").addEventListener("click", function () {
+            const { jsPDF } = window.jspdf;
+            // Select the content to convert into PDF
+            const template = document.querySelector(".template1");
+
+            const noPrintElements = document.querySelectorAll(".no-print");
+            noPrintElements.forEach(element => element.style.display = "none");
+
+            // Hide buttons temporarily
+            const buttons = document.querySelectorAll("button");
+
+            // Check if html2canvas is loaded correctly
+            if (typeof html2canvas === 'undefined') {
+                console.error("html2canvas is not defined. Please check the script source.");
+                return;
+            }
+
+            // Use html2canvas to capture the content
+            html2canvas(template, {
+                backgroundColor: "#ffffff", // Ensure white background
+                scale: 2 // Higher scale for better quality
+            }).then(canvas => {
+                const pdf = new jsPDF("p", "mm", "a4"); // A4 page in mm
+                const imgData = canvas.toDataURL("image/png");
+
+                // Calculate dimensions to fit content within A4
+                const imgWidth = 210; // Full A4 width in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                // Add the image to the PDF
+                pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+                // Save the PDF
+                pdf.save("resume.pdf");
+
+                // if (buttons.length > 0) {
+                // buttons.forEach(button => button.classList.remove("no-print"));
+                // }
+            }).catch(error => {
+                console.error("Error generating PDF:", error);
+            });
+        });
+
+        // Reference input fields and template elements
+        const inputName = document.getElementById("inputName");
+        const inputPhone = document.getElementById("inputPhone");
+        const inputEmail = document.getElementById("inputEmail");
+        const inputGithub = document.getElementById("inputGithub");
+
+        const nameField = document.getElementById("name");
+        const phoneField = document.getElementById("phone");
+        const emailField = document.getElementById("email");
+        const githubField = document.getElementById("github");
+
+        const updateButton = document.getElementById("updateTemplate");
+
+        // Function to update template data
+        updateButton.addEventListener("click", () => {
+            nameField.textContent = inputName.value || "[Your Name]";
+            phoneField.textContent = inputPhone.value || "[Phone Number]";
+            emailField.textContent = inputEmail.value || "[Email]";
+            githubField.textContent = inputGithub.value ? `GitHub: ${inputGithub.value}` : "[GitHub Link]";
+        });
+
+        // Education Dynamic Input Fields
+        const educationData = document.getElementById("educationData");
+        const addEducationButton = document.getElementById("addEducation");
+
+        // Function to add education dynamically
+        addEducationButton.addEventListener("click", () => {
+            const courseName = document.getElementById("inputCourseName").value || "N/A";
+            const coursePercentage = document.getElementById("inputCoursePercentage").value || "N/A";
+            const courseYear = document.getElementById("inputCourseYear").value || "N/A";
+            const collegeName = document.getElementById("inputCollegeName").value || "N/A";
+
+            // Create the new course entry
+            const courseDiv = document.createElement("div");
+            courseDiv.classList.add("courseData");
+            courseDiv.innerHTML = `
+        <div style="display:flex"><strong>${courseName}</strong> &nbsp; <div id="percentage">(${coursePercentage})</div></div>
+        <div id="courseYear">${courseYear}</div>
+        <button class="removeEducation no-print">X</button>
+    `;
+
+            // Create the college entry
+            const collegeDiv = document.createElement("div");
+            collegeDiv.classList.add("courseColg");
+            collegeDiv.innerHTML = `<p>${collegeName}</p>`;
+
+            // Prepend the new data to the education section in the template
+            educationData.prepend(collegeDiv); // Add college entry first
+            educationData.prepend(courseDiv); // Add course entry after college
+
+            // Add remove functionality to the new "Remove" button
+            const removeButtons = document.querySelectorAll(".removeEducation");
+            removeButtons.forEach(button => {
+                button.addEventListener("click", (e) => {
+                    const courseEntry = e.target.closest('.courseData');
+                    const collegeEntry = courseEntry.nextElementSibling;
+                    if (courseEntry) courseEntry.remove();
+                    if (collegeEntry && collegeEntry.classList.contains('courseColg')) collegeEntry.remove();
+                });
+            });
+
+            // Clear the input fields after adding
+            document.getElementById("inputCourseName").value = "";
+            document.getElementById("inputCoursePercentage").value = "";
+            document.getElementById("inputCourseYear").value = "";
+            document.getElementById("inputCollegeName").value = "";
+        });
+
+
+        // Experience Dynamic Input Fields
+        const experienceData = document.getElementById("experienceData");
+        const addExperienceButton = document.getElementById("addExperience");
+
+        // Function to add experience dynamically
+        addExperienceButton.addEventListener("click", () => {
+            const jobTitle = document.getElementById("inputJobTitle").value || "N/A";
+            const companyName = document.getElementById("inputCompanyName").value || "N/A";
+            const experienceYear = document.getElementById("inputExperienceYear").value || "N/A";
+
+            // Create the new experience entry
+            const experienceDiv = document.createElement("div");
+            experienceDiv.classList.add("data");
+            experienceDiv.innerHTML = `
+                <div><strong>${jobTitle}</strong> <div id="percentage">${companyName}</div></div>
+                <div>${experienceYear}</div>
+                <button class="removeExperience no-print">X</button>
+            `;
+
+            // Create the college entry
+            const experienceColgDiv = document.createElement("div");
+            experienceColgDiv.classList.add("courseColg");
+            // experienceColgDiv.innerHTML = `<p>${companyName}</p>`;
+
+            // Append the new data to the experience section in the template
+            experienceData.appendChild(experienceDiv);
+            experienceData.appendChild(experienceColgDiv);
+
+            // Add remove functionality to the new "Remove" button
+            const removeExperienceButtons = document.querySelectorAll(".removeExperience");
+            removeExperienceButtons.forEach(button => {
+                button.addEventListener("click", (e) => {
+                    const experienceEntry = e.target.closest('.data');
+                    const experienceColgEntry = e.target.closest('.courseColg');
+                    if (experienceEntry) experienceEntry.remove();
+                    if (experienceColgEntry) experienceColgEntry.remove();
+                });
+            });
+
+            // Clear the input fields after adding
+            document.getElementById("inputJobTitle").value = "";
+            document.getElementById("inputCompanyName").value = "";
+            document.getElementById("inputExperienceYear").value = "";
+        });
+
+        // Skills Dynamic Input Fields
+        const skillData = document.querySelector(".skillData ul");
+        const addSkillButton = document.getElementById("addSkill");
+
+        // Function to add skill dynamically
+        addSkillButton.addEventListener("click", () => {
+            const skillName = document.getElementById("inputSkill").value || "N/A";
+
+            // Create the new skill entry
+            const skillItem = document.createElement("li");
+            skillItem.innerHTML = `${skillName} <button class="removeSkill no-print">X</button>`;
+
+            // Append the new skill to the skills section in the template
+            skillData.appendChild(skillItem);
+
+            // Add remove functionality to the new "Remove" button
+            const removeSkillButtons = document.querySelectorAll(".removeSkill");
+            removeSkillButtons.forEach(button => {
+                button.addEventListener("click", (e) => {
+                    e.target.closest('li').remove();
+                });
+            });
+
+            // Clear the input field after adding
+            document.getElementById("inputSkill").value = "";
+        });
+
+        const projectData = document.getElementById("projectData");
+        document.getElementById("addProject").addEventListener("click", () => {
+            const projectName = document.getElementById("inputProjectName").value || "N/A";
+            const projectDescription = document.getElementById("inputProjectDescription").value || "N/A";
+            const projectLink = document.getElementById("inputProjectLink").value;
+
+            const projectDiv = document.createElement("div");
+            projectDiv.classList.add("projectItem");
+            projectDiv.innerHTML = `
+        <p><strong>${projectName} ${projectLink ? `<a href="${projectLink}" target="_blank">View Project</a>` : ""}</strong></p>
+        <p>${projectDescription}</p><button class="removeProject no-print">X</button>
+    `;
+            projectData.appendChild(projectDiv);
+
+            // Add remove functionality
+            const removeButtons = document.querySelectorAll(".removeProject");
+            removeButtons.forEach(button => {
+                button.addEventListener("click", (e) => {
+                    e.target.closest('.projectItem').remove();
+                });
+            });
+
+            // Clear input fields
+            document.getElementById("inputProjectName").value = "";
+            document.getElementById("inputProjectDescription").value = "";
+            document.getElementById("inputProjectLink").value = "";
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>

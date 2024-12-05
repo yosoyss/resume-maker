@@ -1,0 +1,189 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 100vh !important;
+    gap: 10px;
+}
+
+.formCont {
+    width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 14px;
+    border: 1px solid #d3d3d3;
+    height: 300px;
+}
+
+.basicData,
+.basicEducation,
+.basicExperience,
+.basicSkills,
+.summaryData{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.basicData .data,
+.basicEducation .educationDataInput,
+.basicExperience .experienceDataInput,
+.basicSkills .skillsDataInput,
+.summaryData .data,
+.basicProjects .projectDataInput {
+    padding: 4px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 2;
+    justify-content: flex-start;
+    margin: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 15px;
+}
+
+#inputSummary{
+    width: 90% !important;
+    height: 60px; 
+}
+
+input {
+    border: 1px solid #d3d3d3;
+    padding: 8px 10px;
+    font-size: 16px;
+    width: 300px;
+    border-radius: 8px;
+    /* width: 200px; */
+}
+
+button {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    background-color: #000000;
+    color: #fff;
+}
+
+textarea {
+    border: 1px solid #d3d3d3;
+    padding: 8px 10px;
+    font-size: 16px;
+    width: 88%;
+    border-radius: 8px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+@media print {
+    button {
+        display: none;
+    }
+}
+
+@media (max-width : 768px) {
+    .formCont{
+        width: 100%;
+        height: 50vh;
+        justify-content: flex-start;
+    }
+
+    .tabButton{
+        flex-grow: 1;
+    }
+
+    textarea{
+        width: 100%;
+    }
+
+    .closeModal{
+        color: #000000;
+    }
+    
+}
+
+/* Tabs */
+.tabContainer {
+    display: flex; 
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.tabButton {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    color: #000000;
+    cursor: pointer;
+    background: #f9f9f9;
+}
+
+
+.tabButton.active {
+    background: #007bff;
+    color: white;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid transparent;
+}
+
+/* Tab Content */
+.tabContent {
+    display: none;
+}
+
+.tabContent.active {
+    display: block;
+}
+
+/* Modal */
+#modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    /* background: white; */
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 100%;
+    overflow-y: auto;
+}
+
+.closeModal {
+    /* margin-bottom: 10px; */
+    /* background: #007bff; */
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
