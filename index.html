@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="referrer" content="no-referrer"> -->
+
     <title>Resume</title>
+
 
     <!-- style for template -->
     <link rel="stylesheet" href="style.css">
@@ -183,23 +186,73 @@
 
                 </div>
             </div>
+            <button id="printTemplate">Save as PDF</button>
         </div>
 
         <!-- template 2 -->
-        
+
     </div>
 
-
+    <script src="./html2canvas.js"></script>
     <script src="script.js"></script>
 
     <!-- Include jsPDF from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <script src="./html2canvas.js"></script>
 
-    <!-- <script>
+    <script>
+document.getElementById("printTemplate").addEventListener("click", function () {
+    const { jsPDF } = window.jspdf;
 
-    </script> -->
+    // Select the elements to process
+    const template = document.querySelector(".template1");
+    const modal = document.getElementById("modal");
+    const modalContent = document.querySelector(".modalContent");
+    template.style.display = "block";
+    
+
+    // Function to temporarily detach the template
+    function detachTemplate(template) {
+        const placeholder = document.createComment("Template placeholder");
+        template.parentNode.replaceChild(placeholder, template);
+        document.body.appendChild(template); // Move template to body temporarily
+        return placeholder; // Return the placeholder to restore later
+    }
+
+    // Function to restore the template
+    function restoreTemplate(template, placeholder) {
+        placeholder.parentNode.replaceChild(template, placeholder);
+    }
+
+    // Detach the template from its nested parent structure
+    const placeholder = detachTemplate(template);
+
+    // Use html2canvas to capture the template
+    html2canvas(template, {
+        backgroundColor: "#ffffff", // Ensure white background
+        scale: 2 // Higher scale for better quality
+    }).then(canvas => {
+        const pdf = new jsPDF("p", "mm", "a4"); // A4 page in mm
+        const imgData = canvas.toDataURL("image/png");
+
+        // Calculate dimensions to fit content within A4
+        const imgWidth = 210; // Full A4 width in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        // Add the image to the PDF
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+        // Save the PDF
+        pdf.save("resume.pdf");
+    }).catch(error => {
+        console.error("Error generating PDF:", error);
+    }).finally(() => {
+        // Restore the template back to its original position
+        restoreTemplate(template, placeholder);
+    });
+});
+
+    </script>
 
 </body>
 

@@ -1,48 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    document.getElementById("printTemplate").addEventListener("click", function () {
-        const { jsPDF } = window.jspdf;
-        // Select the content to convert into PDF
-        const template = document.querySelector(".template1");
-
-        const noPrintElements = document.querySelectorAll(".no-print");
-        noPrintElements.forEach(element => element.style.display = "none");
-
-        // Hide buttons temporarily
-        const buttons = document.querySelectorAll("button");
-
-        // Check if html2canvas is loaded correctly
-        if (typeof html2canvas === 'undefined') {
-            console.error("html2canvas is not defined. Please check the script source.");
-            return;
-        }
-
-        // Use html2canvas to capture the content
-        html2canvas(template, {
-            backgroundColor: "#ffffff", // Ensure white background
-            scale: 2 // Higher scale for better quality
-        }).then(canvas => {
-            const pdf = new jsPDF("p", "mm", "a4"); // A4 page in mm
-            const imgData = canvas.toDataURL("image/png");
-
-            // Calculate dimensions to fit content within A4
-            const imgWidth = 210; // Full A4 width in mm
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            // Add the image to the PDF
-            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-
-            // Save the PDF
-            pdf.save("resume.pdf");
-
-            // if (buttons.length > 0) {
-            // buttons.forEach(button => button.classList.remove("no-print"));
-            // }
-        }).catch(error => {
-            console.error("Error generating PDF:", error);
-        });
-    });
-
     // Reference input fields and template elements
     const inputName = document.getElementById("inputName");
     const inputPhone = document.getElementById("inputPhone");
